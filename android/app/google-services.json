@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "779825882600",
+    "project_id": "fling-app-56728",
+    "storage_bucket": "fling-app-56728.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:779825882600:android:4e67e3aaa27879a2d9305d",
+        "android_client_info": {
+          "package_name": "com.example.flingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "779825882600-h3jj6b7jjftqm7sm0i3sj2419hk8tehu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCU_xtk8aavzNVeIkYFgAO8bOPXZIwrCBw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "779825882600-h3jj6b7jjftqm7sm0i3sj2419hk8tehu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "779825882600-2bndtlg6lvek93urchcjkq1n2ch40a4d.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flingapp.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
