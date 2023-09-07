@@ -1,11 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flingapp/repositories/auth/auth_repository.dart';
 import 'firebase_options.dart';
 import 'package:flingapp/config/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'models/user_model.dart';
-import 'repositories/repositories.dart';
 import 'blocs/blocs.dart';
 import 'config/theme.dart';
 
@@ -30,18 +30,22 @@ class FlingApp extends StatelessWidget {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider(
-          create: (context) => DatabaseRepository(),
+          create: (context) => AuthRepository(),
         ),
       ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-              create: (context) => SwipeBloc(
-                  // authBloc: BlocProvider.of<AuthBloc>(context),
-                  // databaseRepository: context.read<DatabaseRepository>(),
+              create: (_) => AuthBloc(
+                    authRepository: context.read<AuthRepository>(),
+                    // authBloc: BlocProvider.of<AuthBloc>(context),
+                    // databaseRepository: context.read<DatabaseRepository>(),
                   )
-                ..add(LoadUsers(users: User.users)) // add list of sample data
               //BlocProvider.of<AuthBloc>(context).state.user!.uid),
+              ),
+          BlocProvider(
+              create: (_) => SwipeBloc()
+                ..add(LoadUsers(users: User.users)) // add list of sample data
               ),
         ],
         child: MaterialApp(
