@@ -1,18 +1,36 @@
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
-  final TextEditingController controller;
   final String text;
+  final TextEditingController? controller;
+  final Function(String)? onChanged;
 
-  const CustomTextField(
-      {Key? key, required this.text, required this.controller})
-      : super(key: key);
+  CustomTextField({
+    Key? key,
+    this.controller,
+    required this.text,
+    this.onChanged,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      controller: controller,
-      decoration: InputDecoration(border: InputBorder.none, hintText: text),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: TextField(
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: Colors.white,
+          hintText: text,
+          contentPadding: const EdgeInsets.only(bottom: 5.0, top: 12.5),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.white),
+          ),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.white),
+          ),
+        ),
+        onChanged: onChanged,
+      ),
     );
   }
 }

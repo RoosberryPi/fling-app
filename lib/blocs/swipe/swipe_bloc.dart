@@ -48,16 +48,16 @@ class SwipeBloc extends Bloc<SwipeEvent, SwipeState> {
     // });
   }
 
-  void _onUpdateHome(
-    UpdateHome event,
-    //Emitter<SwipeState> emit,
-  ) {
-    if (event.users != null) {
-      //emit(SwipeLoaded(users: event.users!));
-    } else {
-      //emit(SwipeError());
-    }
-  }
+  // void _onUpdateHome(
+  //   UpdateHome event,
+  //   //Emitter<SwipeState> emit,
+  // ) {
+  //   if (event.users != null) {
+  //     //emit(SwipeLoaded(users: event.users!));
+  //   } else {
+  //     //emit(SwipeError());
+  //   }
+  // }
 
   Stream<SwipeState> _onSwipeLeft(SwipeLeft event, SwipeState state
       //Emitter<SwipeState> emit,

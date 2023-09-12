@@ -1,5 +1,8 @@
+import 'package:flingapp/cubits/cubits.dart';
+import 'package:flingapp/repositories/auth/auth_repository.dart';
 import 'package:flingapp/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'onboarding_screens/screens.dart';
 
@@ -9,7 +12,12 @@ class OnboardingScreen extends StatelessWidget {
   static Route route() {
     return MaterialPageRoute(
         settings: const RouteSettings(name: routeName),
-        builder: (context) => OnboardingScreen());
+        // we only need the signup cubit here so no need to put it in main dart
+        builder: (context) => BlocProvider(
+              create: (_) =>
+                  SignupCubit(authRepository: context.read<AuthRepository>()),
+              child: OnboardingScreen(),
+            ));
   }
 
   // create a list of tabs with a start tab
