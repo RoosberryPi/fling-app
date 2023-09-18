@@ -20,8 +20,10 @@ class AuthRepository extends BaseAuthRepository {
 
       final user = credential.user;
       return user;
-    } catch (_) {}
-    return null;
+    } catch (error) {
+      print("signup error is ${error}");
+      throw error;
+    }
   }
 
   @override

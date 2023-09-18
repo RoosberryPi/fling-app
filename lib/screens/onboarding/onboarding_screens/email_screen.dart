@@ -33,7 +33,7 @@ class Email extends StatelessWidget {
                     onChanged: (value) {
                       context.read<SignupCubit>().emailChanged(
                           value); // cubit saves the value to its state
-                      print(state.email);
+                      print("state email is ${state.email}");
                     },
                   ),
                   SizedBox(height: 150),

@@ -1,49 +1,63 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flingapp/cubits/cubits.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CustomButton extends StatelessWidget {
-  final TextEditingController? emailController;
-  final TextEditingController? passwordController;
   final TabController tabController;
   final String text;
 
   const CustomButton({
     Key? key,
-    this.emailController,
-    this.passwordController,
     required this.tabController,
     required this.text,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5.0),
-            gradient: LinearGradient(
-                colors: [Theme.of(context).primaryColor, Colors.redAccent])),
-        child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                elevation: 0, backgroundColor: Colors.transparent),
-            onPressed: () async {
-              if (emailController != null && passwordController != null) {
-                await FirebaseAuth.instance
-                    .createUserWithEmailAndPassword(
-                        email: emailController!.text,
-                        password: passwordController!.text)
-                    .then((value) => print("User added"))
-                    .catchError((error) => print("Error adding user"));
-              }
-              tabController.animateTo(tabController.index + 1);
-            },
-            child: Container(
-                width: double.infinity,
-                child: Center(
-                  child: Text(text,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineMedium
-                          ?.copyWith(color: Colors.white)),
-                ))));
+    final watchedState = context.watch<SignupCubit>().state;
+
+    // email screen
+    if (tabController.index == 1) {
+      if (watchedState.status == SignupStatus.success) {
+        print("success ${watchedState}");
+        tabController.animateTo(tabController.index + 1);
+      } else if (watchedState.status == SignupStatus.error) {
+        print("error ${watchedState} ${watchedState.errorMessage}");
+        Future.delayed(
+            Duration.zero,
+            () => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content:
+                    Text('Error signing up: ${watchedState.errorMessage}'))));
+      }
+    }
+
+    return BlocBuilder<SignupCubit, SignupState>(builder: (context, state) {
+      return DecoratedBox(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5.0),
+              gradient: LinearGradient(
+                  colors: [Theme.of(context).primaryColor, Colors.redAccent])),
+          child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  elevation: 0, backgroundColor: Colors.transparent),
+              onPressed: () async {
+                print("index is ${tabController.index}");
+                if (tabController.index == 1) {
+                  await context.read<SignupCubit>().signUpWithCredentials();
+                } else {
+                  tabController.animateTo(tabController.index + 1);
+                }
+                ;
+              },
+              child: Container(
+                  width: double.infinity,
+                  child: Center(
+                    child: Text(text,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineMedium
+                            ?.copyWith(color: Colors.white)),
+                  ))));
+    });
   }
 }

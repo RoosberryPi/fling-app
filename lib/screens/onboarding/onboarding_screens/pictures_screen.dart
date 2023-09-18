@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 import '../widgets/widgets.dart';
@@ -13,6 +14,7 @@ class Pictures extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // return BlocBuilder<>(builder: (context, state) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 50.0),
       child: Column(
@@ -56,5 +58,6 @@ class Pictures extends StatelessWidget {
         ],
       ),
     );
+    // });
   }
 }
