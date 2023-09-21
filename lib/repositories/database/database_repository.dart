@@ -1,19 +1,19 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-// import '/repositories/repositories.dart';
+import '../storage/storage_repository.dart';
 import '/models/models.dart';
 
 class DatabaseRepository {
-  // final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
   @override
-  void getUser(String userId) {
-    print('Getting user images from DB');
-    // return _firebaseFirestore
-    //     .collection('users')
-    //     .doc(userId)
-    //     .snapshots()
-    //     .map((snap) => User.fromSnapshot(snap));
+  Stream<User> getUser() {
+    return _firebaseFirestore
+        .collection('users')
+        .doc('hEUgxildrSZECjj3uFm7')
+        .snapshots()
+        .map((snap) => User.fromSnapshot(
+            snap)); // result of the snap will be mapped to a user object
   }
 
   @override
@@ -47,13 +47,14 @@ class DatabaseRepository {
   }
 
   @override
-  Future<void> updateUserPictures(User user, String imageName) async {
-    String downloadUrl = 'test';
-    print(downloadUrl);
-    // await StorageRepository().getDownloadURL(user, imageName);
+  Future<void> updateUserPictures(String imageName) async {
+    String downloadUrl = await StorageRepository().getDownloadURL(imageName);
 
-    //return _firebaseFirestore.collection('users').doc(user.id).update({
-    //  'imageUrls': FieldValue.arrayUnion([downloadUrl])
-    //});
+    return _firebaseFirestore
+        .collection('users')
+        .doc('hEUgxildrSZECjj3uFm7')
+        .update({
+      'imageUrls': FieldValue.arrayUnion([downloadUrl])
+    });
   }
 }

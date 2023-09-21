@@ -23,7 +23,13 @@ class SignupCubit extends Cubit<SignupState> {
   }
 
   Future<void> signUpWithCredentials() async {
-    if (!state.isFormValid || state.status == SignupStatus.submitting) return;
+    if (state.status == SignupStatus.submitting) return;
+
+    if (!state.isFormValid) {
+      emit(state.copyWith(
+          status: SignupStatus.error, errorMessage: "please enter info"));
+    }
+
     emit(state.copyWith(status: SignupStatus.submitting));
     try {
       var user = await _authRepository.signUp(

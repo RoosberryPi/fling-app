@@ -1,4 +1,5 @@
 // import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 class User extends Equatable {
@@ -7,8 +8,8 @@ class User extends Equatable {
   final String bio;
   final int age;
   final String gender;
-  final List<String> interests;
-  final List<String> imageUrls;
+  final List<dynamic> interests;
+  final List<dynamic> imageUrls;
   final String jobTitle;
   final String location;
 
@@ -34,20 +35,21 @@ class User extends Equatable {
         jobTitle,
       ];
 
-  // static User fromSnapshot(DocumentSnapshot snap) {
-  //     User user = User(
-  //       id: snap.id,
-  //       name: snap['name'],
-  //       age: snap['age'],
-  //       gender: snap['gender'],
-  //       imageUrls: snap['imageUrls'],
-  //       interests: snap['interests'],
-  //       bio: snap['bio'],
-  //       jobTitle: snap['jobTitle'],
-  //       location: snap['location'],
-  //     );
-  //     return user;
-  //   }
+  // convert the data we get back from Firestore to a User object
+  static User fromSnapshot(DocumentSnapshot snap) {
+    User user = User(
+      id: snap.id,
+      name: snap['name'],
+      age: snap['age'],
+      gender: snap['gender'],
+      imageUrls: snap['imageUrls'],
+      interests: snap['interests'],
+      bio: snap['bio'],
+      jobTitle: snap['jobTitle'],
+      location: snap['location'],
+    );
+    return user;
+  }
 
   Map<String, dynamic> toMap() {
     return {

@@ -1,3 +1,4 @@
+import 'package:flingapp/blocs/blocs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
@@ -27,20 +28,62 @@ class Pictures extends StatelessWidget {
               CustomTextHeader(
                   tabController: tabController, text: "Add 2 or more pictures"),
               SizedBox(height: 10),
-              Row(
-                children: [
-                  CustomImageContainer(tabController: tabController),
-                  CustomImageContainer(tabController: tabController),
-                  CustomImageContainer(tabController: tabController),
-                ],
+              BlocBuilder<ImagesBloc, ImagesState>(
+                builder: (context, state) {
+                  print("image state is ${state}");
+
+                  if (state is ImagesLoading) {
+                    print("loading....");
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+
+                  if (state is ImagesLoaded) {
+                    var imagesCount = state.imageUrls.length;
+
+                    print("loaded");
+                    return Column(
+                      children: [
+                        Row(
+                          children: [
+                            (imagesCount > 0)
+                                ? CustomImageContainer(
+                                    imageUrl: state.imageUrls[0])
+                                : CustomImageContainer(),
+                            (imagesCount > 1)
+                                ? CustomImageContainer(
+                                    imageUrl: state.imageUrls[1])
+                                : CustomImageContainer(),
+                            (imagesCount > 2)
+                                ? CustomImageContainer(
+                                    imageUrl: state.imageUrls[2])
+                                : CustomImageContainer(),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            (imagesCount > 3)
+                                ? CustomImageContainer(
+                                    imageUrl: state.imageUrls[3])
+                                : CustomImageContainer(),
+                            (imagesCount > 4)
+                                ? CustomImageContainer(
+                                    imageUrl: state.imageUrls[4])
+                                : CustomImageContainer(),
+                            (imagesCount > 5)
+                                ? CustomImageContainer(
+                                    imageUrl: state.imageUrls[5])
+                                : CustomImageContainer(),
+                          ],
+                        )
+                      ],
+                    );
+                  } else {
+                    return Text('something went wrong...');
+                  }
+                },
               ),
-              Row(
-                children: [
-                  CustomImageContainer(tabController: tabController),
-                  CustomImageContainer(tabController: tabController),
-                  CustomImageContainer(tabController: tabController),
-                ],
-              )
             ],
           ),
           Column(

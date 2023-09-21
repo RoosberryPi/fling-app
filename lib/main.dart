@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flingapp/repositories/auth/auth_repository.dart';
+import 'package:flingapp/repositories/database/database_repository.dart';
 import 'firebase_options.dart';
 import 'package:flingapp/config/app_router.dart';
 import 'package:flutter/material.dart';
@@ -46,6 +47,11 @@ class FlingApp extends StatelessWidget {
           BlocProvider(
               create: (_) => SwipeBloc()
                 ..add(LoadUsers(users: User.users)) // add list of sample data
+              ),
+          BlocProvider(
+              create: (_) =>
+                  ImagesBloc(databaseRepository: DatabaseRepository())
+                    ..add(LoadImages()) // add list of sample data
               ),
         ],
         child: MaterialApp(

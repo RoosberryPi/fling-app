@@ -15,14 +15,13 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final watchedState = context.watch<SignupCubit>().state;
+    print(watchedState);
 
     // email screen
     if (tabController.index == 1) {
       if (watchedState.status == SignupStatus.success) {
-        print("success ${watchedState}");
         tabController.animateTo(tabController.index + 1);
       } else if (watchedState.status == SignupStatus.error) {
-        print("error ${watchedState} ${watchedState.errorMessage}");
         Future.delayed(
             Duration.zero,
             () => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -41,12 +40,11 @@ class CustomButton extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                   elevation: 0, backgroundColor: Colors.transparent),
               onPressed: () async {
-                print("index is ${tabController.index}");
-                if (tabController.index == 1) {
-                  await context.read<SignupCubit>().signUpWithCredentials();
-                } else {
-                  tabController.animateTo(tabController.index + 1);
-                }
+                // if (tabController.index == 1) {
+                //   await context.read<SignupCubit>().signUpWithCredentials();
+                // } else {
+                tabController.animateTo(tabController.index + 1);
+                // }
                 ;
               },
               child: Container(
